@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Turans Digital Diary</title>
+  
+  <!-- Google Fonts for High-End Editorial Presentation -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- THEME DESIGN SYSTEMS VARIANTS --- */
+    :root {
+      /* Light Mode - Warm, inviting, and intimate like a high-end journal */
+      --bg: #fdfaf6;
+      --card-bg: #ffffff;
+      --text-main: #1b2a24;
+      --text-muted: #5a6e65;
+      --border: #eaddd3;
+      --accent: #d76c48;          /* Terracotta Red/Orange */
+      --accent-light: #f4eae1;    /* Warm Blush */
+      --olive: #5f7466;           /* Soft Sage Green */
+      --error: #c84b4b;
+      --header-bg: rgba(253, 250, 246, 0.96);
+      
+      /* Layered Shadows for Organic Depth */
+      --shadow-sm: 0 2px 8px rgba(27, 42, 36, 0.04);
+      --shadow-md: 0 16px 40px rgba(27, 42, 36, 0.06);
+      --shadow-lg: 0 30px 60px rgba(27, 42, 36, 0.1);
+    }
+
+    [data-theme="dark"] {
+      /* Dark Mode - Deep, cozy, and easy on the eyes for late-night reading */
+      --bg: #111815;
+      --card-bg: #18221e;
+      --text-main: #f1f5f3;
+      --text-muted: #9fb0a7;
+      --border: #26352f;
+      --accent: #e47d58;
+      --accent-light: #2b1f1a;
+      --olive: #8fa395;
+      --error: #e05c5c;
+      --header-bg: rgba(17, 24, 21, 0.96);
+      
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 16px 40px rgba(0, 0, 0, 0.4);
+      --shadow-lg: 0 35px 70px rgba(0, 0, 0, 0.5);
+    }
+
+    /* --- BASE STYLING ELEMENTS --- */
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      transition: background-color 0.4s cubic-bezier(0.25, 1, 0.5, 1), color 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    /* --- INTERACTIVE SYSTEM NAV LAYER --- */
+    .site-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 48px;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--header-bg);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+      transition: background-color 0.3s, border-color 0.3s;
+    }
+
+    .brand-container {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .site-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid var(--border);
+      background-color: var(--accent-light);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .brand {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.1rem;
+      font-weight: 400;
+      color: var(--text-main);
+      letter-spacing: -0.5px;
+    }
+
+    .brand em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 36px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding: 8px 0;
+      position: relative;
+      letter-spacing: -0.1px;
+    }
+
+    /* Smooth growing line hover effect underneath links */
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; width: 0; height: 2px;
+      background-color: var(--accent);
+      transition: width 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .nav-link.active, .nav-link:hover {
+      color: var(--text-main);
+    }
+
+    .nav-link.active::after, .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .status-indicator {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--olive);
+      background: var(--accent-light);
+      padding: 6px 14px;
+      border-radius: 30px;
+      border: 1px solid var(--border);
+      letter-spacing: 0.5px;
+    }
+
+    /* --- THEME TOGGLE ELEMENT --- */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .theme-toggle:hover {
+      background-color: var(--accent-light);
+      border-color: var(--accent);
+      transform: scale(1.08) rotate(15deg);
+    }
+
+    .theme-toggle svg { width: 18px; height: 18px; }
+    [data-theme="dark"] .sun-icon { display: block; }
+    [data-theme="dark"] .moon-icon { display: none; }
+    .sun-icon { display: none; }
+    .moon-icon { display: block; }
+
+    /* --- HAMBURGER ELEMENT --- */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 22px;
+      height: 16px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      z-index: 110;
+    }
+
+    .hamburger span {
+      width: 100%;
+      height: 2px;
+      background-color: var(--text-main);
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s;
+    }
+
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* --- SITE ENVIRONMENT PAGE STRUCTURING --- */
+    .content-wrapper {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 60px 48px;
+    }
+
+    .tab-content {
+      display: none;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    /* Elegant fade up animation when switching tabs */
+    .tab-content.active {
+      display: block;
+      animation: tabOpeningTransition 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes tabOpeningTransition {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* --- HOME VIEW ELEMENTS --- */
+    .hero { max-width: 850px; }
+
+    .editorial-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(3.2rem, 7vw, 5rem);
+      font-weight: 400;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin: 0 0 24px 0;
+    }
+
+    .editorial-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-lead {
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 48px;
+    }
+
+    /* Live Counter Card Layout */
+    .counter-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 48px;
+      border-radius: 24px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .counter-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--olive));
+    }
+
+    .card-tagline {
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--olive);
+      display: block;
+      margin-bottom: 20px;
+    }
+
+    .timer-display {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      color: var(--text-main);
+      line-height: 1.1;
+      font-weight: 400;
+    }
+
+    .anniversary-date {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* --- PUBLIC DIARY GRID --- */
+    .section-header {
+      margin-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      margin: 0 0 8px 0;
+    }
+
+    .section-sub {
+      color: var(--text-muted);
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .editorial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 40px;
+    }
+
+    .entry-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .entry-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: var(--shadow-md);
+    }
+
+    .img-container {
+      width: 100%;
+      height: 260px;
+      background-color: var(--accent-light);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.4s ease;
+    }
+
+    .entry-card:hover .img-container {
+      transform: scale(0.99);
+    }
+
+    .image-placeholder-svg {
+      font-size: 3.5rem;
+      filter: grayscale(0.2);
+    }
+
+    .card-meta {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 24px 0 10px 0;
+    }
+
+    .card-heading {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.9rem;
+      font-weight: 400;
+      margin: 0 0 12px 0;
+      line-height: 1.2;
+    }
+
+    .card-body-text {
+      color: var(--text-muted);
+      line-height: 1.6;
+      font-size: 0.98rem;
+      margin: 0;
+    }
+
+    /* --- THE VAULT PORTAL INTERFACES --- */
+    .auth-card-panel {
+      max-width: 400px;
+      margin: 8vh auto;
+      text-align: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 56px 40px;
+      border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .lock-icon-wrapper {
+      font-size: 2.5rem;
+      margin-bottom: 24px;
+      display: inline-block;
+      animation: floatIcon 3s infinite ease-in-out;
+    }
+
+    @keyframes floatIcon {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .auth-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.6rem;
+      font-weight: 400;
+      margin: 0 0 12px 0;
+    }
+
+    .auth-description {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .form-group-field {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group-field input {
+      padding: 16px;
+      border: 1px solid var(--border);
+      background-color: var(--bg);
+      color: var(--text-main);
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .form-group-field input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--accent-light);
+    }
+
+    .btn-primary {
+      background-color: var(--accent);
+      color: #ffffff;
+      border: none;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 0.98rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s;
+      box-shadow: 0 4px 14px rgba(215, 108, 72, 0.2);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--text-main);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .error-msg {
+      margin-top: 20px;
+      color: var(--error);
+      font-size: 0.88rem;
+      font-weight: 600;
+      display: none;
+    }
+
+    /* Subtle side-to-side shake for wrong passwords */
+    @keyframes shakeError {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
+    }
+
+    /* --- SECURED INTERNAL LOG VIEWS --- */
+    .decrypted-vault-layout {
+      display: none;
+    }
+
+    .vault-banner {
+      margin-bottom: 48px;
+      background: var(--accent-light);
+      padding: 44px;
+      border-radius: 24px;
+      border: 1px solid var(--border);
+    }
+
+    .banner-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      background: var(--accent);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+    }
+
+    .vault-main-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 3rem;
+      font-weight: 400;
+      margin: 0 0 8px 0;
+    }
+
+    .vault-sub-title {
+      color: var(--text-muted);
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 32px;
+      margin-bottom: 60px;
+    }
+
+    .growth-panel {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 36px;
+      border-radius: 20px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+      transition: border-color 0.3s ease;
+    }
+
+    .growth-panel:hover {
+      border-color: var(--olive);
+    }
+
+    .panel-pill {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 6px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .panel-pill.urgent { background: rgba(200, 75, 75, 0.1); color: var(--error); }
+    .panel-pill.highlight { background: rgba(95, 116, 102, 0.1); color: var(--olive); }
+
+    .growth-panel h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.2rem;
+      margin: 0 0 16px 0;
+      font-weight: 400;
+    }
+
+    .correction-note {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--text-main);
+      font-style: italic;
+      border-left: 3px solid var(--accent);
+      padding-left: 18px;
+      margin: 0 0 28px 0;
+    }
+
+    .action-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 16px;
+    }
+
+    .status-marker {
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .status-marker.resolved { color: var(--olive); }
+    .status-marker.active { color: var(--accent); }
+
+    .vault-gallery-block {
+      margin-top: 60px;
+    }
+
+    .block-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.4rem;
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+
+    .secure-asset .img-container.secret {
+      background: repeating-linear-gradient(
+        45deg,
+        var(--accent-light),
+        var(--accent-light) 10px,
+        var(--bg) 10px,
+        var(--bg) 20px
+      );
+    }
+
+    /* --- MOBILE RESPONSIVE ADAPTATIONS --- */
+    @media (max-width: 868px) {
+      .site-header { padding: 16px 24px; }
+      .hamburger { display: flex; }
+      
+      .main-nav {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%; left: 0; width: 100%;
+        background-color: var(--card-bg);
+        border-bottom: 1px solid var(--border);
+        padding: 32px 0;
+        gap: 24px;
+        box-shadow: var(--shadow-lg);
+        z-index: 99;
+      }
+      
+      .main-nav.open { display: flex; }
+      .nav-link { width: 100%; text-align: center; font-size: 1.1rem; padding: 4px 0; }
+      .nav-link::after { display: none; }
+      
+      .content-wrapper { padding: 40px 24px; }
+      .status-indicator { display: none; } 
+      .counter-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CORE CONTAINER HEADER -->
+  <header class="site-header">
+    <div class="header-left">
+      <div class="brand-container">
+        <div class="site-logo" style="background-image: url('logo.png');"></div>
+        <div class="brand">Thee<em>Turans</em></div>
+      </div>
+    </div>
+    
+    <nav class="main-nav" id="mainNav">
+      <a href="#home" class="nav-link active" data-target="home">Home Hub</a>
+      <a href="#diary" class="nav-link" data-target="diary">Public Diary</a>
+      <a href="#vault" class="nav-link" data-target="vault">The Vault</a>
+    </nav>
+    
+    <div class="header-actions">
+      <span class="status-indicator" id="systemStatus">Connected</span>
+      
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <svg class="moon-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        <svg class="sun-icon" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+      </button>
+      
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- WORKSPACE VIEWPORT SLOTS -->
+  <main class="content-wrapper">
+    
+    <!-- HOME TAB INTERACTION FRAME -->
+    <section id="home" class="tab-content active">
+      <div class="hero">
+        <h1 class="editorial-title">Writing our own timeline, <em>day by day</em>.</h1>
+        <p class="hero-lead">A shared sanctuary dedicated to capturing our growth, celebrating milestones, correcting our steps, and documenting life together since day one.</p>
+        
+        <!-- Live Anniversary Counter Card -->
+        <div class="dashboard-card counter-card">
+          <span class="card-tagline">Time spent building our world together</span>
+          <div id="countdownTimer" class="timer-display">Calculating journey timeline...</div>
+          <p class="anniversary-date">Since November 4, 2024</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PUBLIC DIARY FLOW -->
+    <section id="diary" class="tab-content">
+      <div class="section-header">
+        <h2 class="section-title">The Daily Chapter</h2>
+        <p class="section-sub">Snapshots of our daily routine, memories, and shared growth spaces.</p>
+      </div>
+      
+      <div class="editorial-grid">
+        <!-- Card 1 -->
+        <article class="entry-card">
+          <div class="img-container">
+            <span style="font-size: 2.5rem;">🌱</span>
+          </div>
+          <div class="card-meta">November 4, 2024 • Founding Chapter</div>
+          <h3 class="card-heading">Where Our True Legacy Began</h3>
+          <p class="card-body-text">The official launch coordinates of our timeline. This day marked a permanent turn in how we approach life, planning out architecture, and managing combined paths seamlessly.</p>
+        </article>
+        
+        <!-- Card 2 -->
+        <article class="entry-card">
+          <div class="img-container">
+            <span style="font-size: 2.5rem;">🏗️</span>
+          </div>
+          <div class="card-meta">Constructed Milestones</div>
+          <h3 class="card-heading">Building Frameworks and Groundwork</h3>
+          <p class="card-body-text">Reviewing floor plans, windows, bricks, and architectural foundations. Every structural expansion we design mirrors the structural foundation we match internally.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ENCRYPTED PRIVATE VAULT TAB -->
+    <section id="vault" class="tab-content">
+      <!-- Auth Guard Portal Wrapper Box -->
+      <div id="vaultLockScreen" class="auth-card-panel">
+        <div class="lock-icon-wrapper">🔒</div>
+        <h2 class="auth-title">The Private Sanctuary</h2>
+        <p class="auth-description">Enter the secure passcode to access direct internal feedback, growth logs, shared corrections, and confidential design imagery.</p>
+        
+        <form id="vaultGatekeeperForm" onsubmit="unlockVault(event)">
+          <div class="form-group-field">
+            <input type="password" id="vaultPasscodeField" placeholder="Enter secure password key..." required>
+            <button type="submit" class="btn-primary">Decrypt Access</button>
+          </div>
+          <div id="vaultErrorFeedback" class="error-msg">Verification failed. Incorrect passcode security signature.</div>
+        </form>
+      </div>
+
+      <!-- Private Decrypted Dashboard Container (Hidden natively on load) -->
+      <div id="vaultSecuredContent" class="decrypted-vault-layout">
+        <div class="vault-banner">
+          <div class="banner-badge">Access Level: Secure</div>
+          <h2 class="vault-main-title">Corrections, Alignment & Shared Logs</h2>
+          <p class="vault-sub-title">A real, transparent view of the things we tweak, modify, and improve for each other over time.</p>
+        </div>
+        
+        <div class="story-grid">
+          <!-- Column 1: Growth Log Tracking -->
+          <div class="growth-panel correction-box">
+            <div class="panel-pill urgent">Correction Action Needed</div>
+            <h3>Notes For Him</h3>
+            <p class="correction-note">"Need to prioritize clearing communication channels explicitly when technical work updates run late into the evening. Adjusting focus parameters immediately."</p>
+            <div class="action-footer">
+              <span class="status-marker active">Pending Verification</span>
+            </div>
+          </div>
+          
+          <!-- Column 2: Correction Alignment Log Tracking -->
+          <div class="growth-panel alignment-box">
+            <div class="panel-pill highlight">Mutual Review Log</div>
+            <h3>Notes For Her</h3>
+            <p class="correction-note">"Ensure we compare individual tracking data matrices before executing updates on architectural designs or materials planning. Alignment keeps us on track."</p>
+            <div class="action-footer">
+              <span class="status-marker resolved">Open Review Loop</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Secure Vault Assets Row -->
+        <div class="vault-gallery-block">
+          <h4 class="block-title">Confidential Gallery Logs</h4>
+          <div class="editorial-grid">
+            <div class="entry-card secure-asset">
+              <div class="img-container secret">
+                <span style="font-size: 2.5rem;">📂</span>
+              </div>
+              <div class="card-meta">Private View Secure Server Storage</div>
+              <h3 class="card-heading">Blueprint Iterations & Unfiltered Notes</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- UNIFIED AND FIXED JAVASCRIPT SYSTEM ENGINE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initThemeEngine();
+      initNavigationRouter();
+      initLiveCountdown();
+      initBatteryIndicator();
+    });
+
+    /**
+     * 1. Fixed Theme Engine
+     */
+    function initThemeEngine() {
+      const toggleBtn = document.getElementById('themeToggle');
+      if (!toggleBtn) return;
+
+      let savedTheme = localStorage.getItem('site-theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+
+      toggleBtn.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('site-theme', newTheme);
+      });
+    }
+
+    /**
+     * 2. Navigation Tab Router & Hamburger System
+     */
+    function initNavigationRouter() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const tabs = document.querySelectorAll('.tab-content');
+      const hamburger = document.getElementById('hamburgerBtn');
+      const mainNav = document.getElementById('mainNav');
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const targetTabId = link.getAttribute('data-target');
+
+          if (mainNav && mainNav.classList.contains('open')) {
+            mainNav.classList.remove('open');
+            hamburger?.classList.remove('open');
+          }
+
+          navLinks.forEach(l => l.classList.remove('active'));
+          link.classList.add('active');
+
+          tabs.forEach(tab => {
+            tab.classList.remove('active');
+            if (tab.id === targetTabId) {
+              tab.classList.add('active');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+          });
+        });
+      });
+
+      if (hamburger && mainNav) {
+        hamburger.addEventListener('click', () => {
+          hamburger.classList.toggle('open');
+          mainNav.classList.toggle('open');
+        });
+      }
+    }
+
+    /**
+     * 3. Anniversary Live Timer
+     */
+    function initLiveCountdown() {
+      const displayElement = document.getElementById('countdownTimer');
+      if (!displayElement) return;
+
+      // Milestone Target: November 4, 2024 (Month index is 0-based, so 10 = November)
+      const targetDate = new Date(2024, 10, 4).getTime();
+
+      function updateTimer() {
+        const now = new Date().getTime();
+        const difference = now - targetDate;
+
+        if (difference < 0) {
+          displayElement.textContent = "00d 00h 00m 00s";
+          return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        const pad = (num) => String(num).padStart(2, '0');
+        displayElement.textContent = `${days}d ${pad(hours)}h ${pad(minutes)}m ${pad(seconds)}s`;
+      }
+
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    /**
+     * 4. Device Battery Diagnostic API
+     */
+    function initBatteryIndicator() {
+      const statusPill = document.getElementById('systemStatus');
+      if (!statusPill) return;
+
+      if ('getBattery' in navigator) {
+        navigator.getBattery().then(function (battery) {
+          function updateBatteryDisplay() {
+            const level = Math.round(battery.level * 100);
+            let statusText = '';
+
+            if (battery.charging) {
+              statusText = `⚡ Charging (${level}%)`;
+            } else if (level === 100) {
+              statusText = `🔋 Full (100%)`;
+            } else if (level <= 20) {
+              statusText = `🪫 Low (${level}%)`;
+            } else {
+              statusText = `Battery: ${level}%`;
+            }
+            statusPill.textContent = statusText;
+          }
+
+          updateBatteryDisplay();
+          battery.addEventListener('levelchange', updateBatteryDisplay);
+          battery.addEventListener('chargingchange', updateBatteryDisplay);
+        }).catch(function() {
+          statusPill.textContent = "Online";
+        });
+      } else {
+        statusPill.textContent = "Online";
+      }
+    }
+
+    /**
+     * 5. Vault Access Verification
+     * Key is configured to: 2024
+     */
+    function unlockVault(event) {
+      event.preventDefault();
+      
+      const inputField = document.getElementById('vaultPasscodeField');
+      const errorField = document.getElementById('vaultErrorFeedback');
+      const lockScreen = document.getElementById('vaultLockScreen');
+      const secureContent = document.getElementById('vaultSecuredContent');
+
+      if (!inputField) return;
+
+      if (inputField.value.trim() === "2024") {
+        lockScreen.style.display = 'none';
+        secureContent.style.display = 'block';
+        errorField.style.display = 'none';
+      } else {
+        errorField.style.display = 'block';
+        inputField.style.animation = 'none';
+        void inputField.offsetWidth; // Force element layout reflow
+        inputField.style.animation = 'shakeError 0.4s ease';
+      }
+    }
+  </script>
+</body>
+</html>
