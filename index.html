@@ -13,26 +13,23 @@
   <style>
     /* --- THEME DESIGN SYSTEMS VARIANTS --- */
     :root {
-      /* Light Mode - Warm, inviting, and intimate like a high-end journal */
       --bg: #fdfaf6;
       --card-bg: #ffffff;
       --text-main: #1b2a24;
       --text-muted: #5a6e65;
       --border: #eaddd3;
-      --accent: #d76c48;          /* Terracotta Red/Orange */
-      --accent-light: #f4eae1;    /* Warm Blush */
-      --olive: #5f7466;           /* Soft Sage Green */
+      --accent: #d76c48;          
+      --accent-light: #f4eae1;    
+      --olive: #5f7466;           
       --error: #c84b4b;
       --header-bg: rgba(253, 250, 246, 0.96);
       
-      /* Layered Shadows for Organic Depth */
       --shadow-sm: 0 2px 8px rgba(27, 42, 36, 0.04);
       --shadow-md: 0 16px 40px rgba(27, 42, 36, 0.06);
       --shadow-lg: 0 30px 60px rgba(27, 42, 36, 0.1);
     }
 
     [data-theme="dark"] {
-      /* Dark Mode - Deep, cozy, and easy on the eyes for late-night reading */
       --bg: #111815;
       --card-bg: #18221e;
       --text-main: #f1f5f3;
@@ -121,7 +118,6 @@
       letter-spacing: -0.1px;
     }
 
-    /* Smooth growing line hover effect underneath links */
     .nav-link::after {
       content: '';
       position: absolute;
@@ -155,7 +151,6 @@
       letter-spacing: 0.5px;
     }
 
-    /* --- THEME TOGGLE ELEMENT --- */
     .theme-toggle {
       background: none;
       border: 1px solid var(--border);
@@ -181,7 +176,6 @@
     .sun-icon { display: none; }
     .moon-icon { display: block; }
 
-    /* --- HAMBURGER ELEMENT --- */
     .hamburger {
       display: none;
       flex-direction: column;
@@ -219,7 +213,6 @@
       transform: translateY(20px);
     }
 
-    /* Elegant fade up animation when switching tabs */
     .tab-content.active {
       display: block;
       animation: tabOpeningTransition 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -253,7 +246,6 @@
       margin-bottom: 48px;
     }
 
-    /* Live Counter Card Layout */
     .counter-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -296,7 +288,7 @@
       font-weight: 500;
     }
 
-    /* --- PUBLIC DIARY GRID --- */
+    /* --- PUBLIC DIARY GRID & GALLERIES --- */
     .section-header {
       margin-bottom: 48px;
       border-bottom: 1px solid var(--border);
@@ -318,8 +310,8 @@
 
     .editorial-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 40px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
     }
 
     .entry-card {
@@ -329,6 +321,8 @@
       padding: 24px;
       box-shadow: var(--shadow-sm);
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
     }
 
     .entry-card:hover {
@@ -339,7 +333,7 @@
 
     .img-container {
       width: 100%;
-      height: 260px;
+      height: 240px;
       background-color: var(--accent-light);
       border-radius: 12px;
       overflow: hidden;
@@ -347,39 +341,97 @@
       align-items: center;
       justify-content: center;
       transition: transform 0.4s ease;
-    }
-
-    .entry-card:hover .img-container {
-      transform: scale(0.99);
-    }
-
-    .image-placeholder-svg {
-      font-size: 3.5rem;
-      filter: grayscale(0.2);
+      background-size: cover;
+      background-position: center;
     }
 
     .card-meta {
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-weight: 700;
       color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin: 24px 0 10px 0;
+      margin: 20px 0 8px 0;
     }
 
     .card-heading {
       font-family: 'Instrument Serif', serif;
-      font-size: 1.9rem;
+      font-size: 1.7rem;
       font-weight: 400;
-      margin: 0 0 12px 0;
+      margin: 0 0 10px 0;
       line-height: 1.2;
     }
 
     .card-body-text {
       color: var(--text-muted);
-      line-height: 1.6;
-      font-size: 0.98rem;
+      line-height: 1.5;
+      font-size: 0.95rem;
       margin: 0;
+    }
+
+    /* --- CONTACT FORM SYSTEM --- */
+    .contact-card-panel {
+      max-width: 600px;
+      margin: 40px 0;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .radio-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .radio-label {
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: 12px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      background: var(--bg);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .radio-group input[type="radio"] {
+      display: none;
+    }
+
+    .radio-group input[type="radio"]:checked + .radio-label {
+      border-color: var(--accent);
+      background-color: var(--accent-light);
+      color: var(--text-main);
+    }
+
+    .textarea-field {
+      width: 100%;
+      min-height: 120px;
+      padding: 16px;
+      border: 1px solid var(--border);
+      background-color: var(--bg);
+      color: var(--text-main);
+      border-radius: 14px;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+      resize: vertical;
+      margin-bottom: 20px;
+      transition: border-color 0.3s ease;
+    }
+
+    .textarea-field:focus {
+      outline: none;
+      border-color: var(--accent);
     }
 
     /* --- THE VAULT PORTAL INTERFACES --- */
@@ -445,25 +497,6 @@
       box-shadow: 0 0 0 4px var(--accent-light);
     }
 
-    .btn-primary {
-      background-color: var(--accent);
-      color: #ffffff;
-      border: none;
-      padding: 16px;
-      border-radius: 14px;
-      font-size: 0.98rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s;
-      box-shadow: 0 4px 14px rgba(215, 108, 72, 0.2);
-    }
-
-    .btn-primary:hover {
-      background-color: var(--text-main);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-
     .error-msg {
       margin-top: 20px;
       color: var(--error);
@@ -472,14 +505,12 @@
       display: none;
     }
 
-    /* Subtle side-to-side shake for wrong passwords */
     @keyframes shakeError {
       0%, 100% { transform: translateX(0); }
       20%, 60% { transform: translateX(-6px); }
       40%, 80% { transform: translateX(6px); }
     }
 
-    /* --- SECURED INTERNAL LOG VIEWS --- */
     .decrypted-vault-layout {
       display: none;
     }
@@ -629,7 +660,46 @@
       .content-wrapper { padding: 40px 24px; }
       .status-indicator { display: none; } 
       .counter-card { padding: 32px 24px; }
+      .radio-group { grid-template-columns: 1fr; gap: 8px; }
     }
+    /* --- REFINED BUTTON SYSTEM --- */
+.btn-primary {
+  background-color: var(--accent);
+  color: #ffffff;
+  border: 1px solid transparent;
+  padding: 16px 28px;
+  border-radius: 14px;
+  font-size: 0.98rem;
+  font-weight: 600;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-sizing: border-box;
+  width: 100%; /* Spans full width inside containers naturally */
+  box-shadow: 0 4px 14px rgba(215, 108, 72, 0.25);
+  transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.btn-primary:hover {
+  background-color: var(--text-main);
+  color: var(--bg);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Specific adjustment for dark mode to ensure the hover contrast looks striking */
+[data-theme="dark"] .btn-primary:hover {
+  background-color: #ffffff;
+  color: #111815;
+}
   </style>
 </head>
 <body>
@@ -645,7 +715,7 @@
     
     <nav class="main-nav" id="mainNav">
       <a href="#home" class="nav-link active" data-target="home">Home Hub</a>
-      <a href="#diary" class="nav-link" data-target="diary">Public Diary</a>
+      <a href="#diary" class="nav-link" data-target="diary">Public Gallery</a>
       <a href="#vault" class="nav-link" data-target="vault">The Vault</a>
     </nav>
     
@@ -665,7 +735,6 @@
     </div>
   </header>
 
-  <!-- WORKSPACE VIEWPORT SLOTS -->
   <main class="content-wrapper">
     
     <!-- HOME TAB INTERACTION FRAME -->
@@ -674,48 +743,129 @@
         <h1 class="editorial-title">Writing our own timeline, <em>day by day</em>.</h1>
         <p class="hero-lead">A shared sanctuary dedicated to capturing our growth, celebrating milestones, correcting our steps, and documenting life together since day one.</p>
         
-        <!-- Live Anniversary Counter Card -->
         <div class="dashboard-card counter-card">
           <span class="card-tagline">Time spent building our world together</span>
           <div id="countdownTimer" class="timer-display">Calculating journey timeline...</div>
           <p class="anniversary-date">Since November 4, 2024</p>
         </div>
+
+        <!-- NEW RESPONSIVE INTERACTIVE HUB CONTACT PORTAL -->
+        <div class="contact-card-panel">
+          <h2 class="card-heading" style="font-family: 'Instrument Serif', serif; font-size: 2.2rem;">Connect With Us</h2>
+          <p class="card-body-text" style="margin-bottom: 24px;">Select your preferred medium below to generate a gateway link directly to our native communication apps.</p>
+          
+          <form onsubmit="handleContactRouting(event)">
+            <div class="radio-group">
+              <div>
+                <input type="radio" id="channelEmail" name="contactChannel" value="email" checked>
+                <label for="channelEmail" class="radio-label">
+                  <span style="font-size: 1.3rem;">✉️</span> Email Client
+                </label>
+              </div>
+              <div>
+                <input type="radio" id="channelWhatsapp" name="contactChannel" value="whatsapp">
+                <label for="channelWhatsapp" class="radio-label">
+                  <span style="font-size: 1.3rem;">💬</span> WhatsApp
+                </label>
+              </div>
+              <div>
+                <input type="radio" id="channelCall" name="contactChannel" value="call">
+                <label for="channelCall" class="radio-label">
+                  <span style="font-size: 1.3rem;">📞</span> Direct Call
+                </label>
+              </div>
+            </div>
+
+            <textarea id="contactMessageInput" class="textarea-field" placeholder="Write your text note here... (Not required for direct calls)"></textarea>
+            <button type="submit" class="btn-primary" style="width: 100%;">Open Selected Application</button>
+          </form>
+        </div>
       </div>
     </section>
 
-    <!-- PUBLIC DIARY FLOW -->
+    <!-- PUBLIC GALLERY FLOW (10 ITEMS) -->
     <section id="diary" class="tab-content">
       <div class="section-header">
         <h2 class="section-title">The Daily Chapter</h2>
-        <p class="section-sub">Snapshots of our daily routine, memories, and shared growth spaces.</p>
+        <p class="section-sub">Snapshots of our daily routine, milestones, and shared moments.</p>
       </div>
       
       <div class="editorial-grid">
         <!-- Card 1 -->
         <article class="entry-card">
-          <div class="img-container">
-            <span style="font-size: 2.5rem;">🌱</span>
-          </div>
-          <div class="card-meta">November 4, 2024 • Founding Chapter</div>
-          <h3 class="card-heading">Where Our True Legacy Began</h3>
-          <p class="card-body-text">The official launch coordinates of our timeline. This day marked a permanent turn in how we approach life, planning out architecture, and managing combined paths seamlessly.</p>
+          <div class="img-container" style="background-image: url('public1.jpg');"></div>
+          <div class="card-meta">Chapter 01</div>
+          <h3 class="card-heading">Where Legacy Began</h3>
+          <p class="card-body-text">The official launch coordinates of our timeline.</p>
         </article>
-        
         <!-- Card 2 -->
         <article class="entry-card">
-          <div class="img-container">
-            <span style="font-size: 2.5rem;">🏗️</span>
-          </div>
-          <div class="card-meta">Constructed Milestones</div>
-          <h3 class="card-heading">Building Frameworks and Groundwork</h3>
-          <p class="card-body-text">Reviewing floor plans, windows, bricks, and architectural foundations. Every structural expansion we design mirrors the structural foundation we match internally.</p>
+          <div class="img-container" style="background-image: url('public2.jpg');"></div>
+          <div class="card-meta">Chapter 02</div>
+          <h3 class="card-heading">Framework Foundations</h3>
+          <p class="card-body-text">Reviewing floor layouts, materials, and initial groundwork updates.</p>
+        </article>
+        <!-- Card 3 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public3.jpg');"></div>
+          <div class="card-meta">Chapter 03</div>
+          <h3 class="card-heading">Morning Rituals</h3>
+          <p class="card-body-text">Capturing simple spaces and quiet morning planning routines.</p>
+        </article>
+        <!-- Card 4 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public4.jpg');"></div>
+          <div class="card-meta">Chapter 04</div>
+          <h3 class="card-heading">Weekend Travels</h3>
+          <p class="card-body-text">Exploring backroads and taking a step away from active schedules.</p>
+        </article>
+        <!-- Card 5 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public5.jpg');"></div>
+          <div class="card-meta">Chapter 05</div>
+          <h3 class="card-heading">Shared Architecture</h3>
+          <p class="card-body-text">Mapping layout specifications for the new residential framework design.</p>
+        </article>
+        <!-- Card 6 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public6.jpg');"></div>
+          <div class="card-meta">Chapter 06</div>
+          <h3 class="card-heading">Sunset Highlights</h3>
+          <p class="card-body-text">Taking clear breaks to review daily progression milestones together.</p>
+        </article>
+        <!-- Card 7 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public7.jpg');"></div>
+          <div class="card-meta">Chapter 07</div>
+          <h3 class="card-heading">The Library Corner</h3>
+          <p class="card-body-text">Organizing historical print media, archives, and catalog indices.</p>
+        </article>
+        <!-- Card 8 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public8.jpg');"></div>
+          <div class="card-meta">Chapter 08</div>
+          <h3 class="card-heading">Café Strategies</h3>
+          <p class="card-body-text">Drafting career milestones and systemic data profiles over dark coffee.</p>
+        </article>
+        <!-- Card 9 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public9.jpg');"></div>
+          <div class="card-meta">Chapter 09</div>
+          <h3 class="card-heading">Rainy Transitions</h3>
+          <p class="card-body-text">Watching changing seasons redefine our operational outdoor environments.</p>
+        </article>
+        <!-- Card 10 -->
+        <article class="entry-card">
+          <div class="img-container" style="background-image: url('public10.jpg');"></div>
+          <div class="card-meta">Chapter 10</div>
+          <h3 class="card-heading">Future Horizon Maps</h3>
+          <p class="card-body-text">Setting clear target goals for the upcoming professional season ahead.</p>
         </article>
       </div>
     </section>
 
     <!-- ENCRYPTED PRIVATE VAULT TAB -->
     <section id="vault" class="tab-content">
-      <!-- Auth Guard Portal Wrapper Box -->
       <div id="vaultLockScreen" class="auth-card-panel">
         <div class="lock-icon-wrapper">🔒</div>
         <h2 class="auth-title">The Private Sanctuary</h2>
@@ -730,7 +880,7 @@
         </form>
       </div>
 
-      <!-- Private Decrypted Dashboard Container (Hidden natively on load) -->
+      <!-- Private Decrypted Dashboard Container -->
       <div id="vaultSecuredContent" class="decrypted-vault-layout">
         <div class="vault-banner">
           <div class="banner-badge">Access Level: Secure</div>
@@ -739,37 +889,94 @@
         </div>
         
         <div class="story-grid">
-          <!-- Column 1: Growth Log Tracking -->
           <div class="growth-panel correction-box">
             <div class="panel-pill urgent">Correction Action Needed</div>
             <h3>Notes For Him</h3>
-            <p class="correction-note">"Need to prioritize clearing communication channels explicitly when technical work updates run late into the evening. Adjusting focus parameters immediately."</p>
-            <div class="action-footer">
-              <span class="status-marker active">Pending Verification</span>
-            </div>
+            <p class="correction-note">"Need to prioritize clearing communication channels explicitly when technical work updates run late."</p>
+            <div class="action-footer"><span class="status-marker active">Pending Verification</span></div>
           </div>
           
-          <!-- Column 2: Correction Alignment Log Tracking -->
           <div class="growth-panel alignment-box">
             <div class="panel-pill highlight">Mutual Review Log</div>
             <h3>Notes For Her</h3>
-            <p class="correction-note">"Ensure we compare individual tracking data matrices before executing updates on architectural designs or materials planning. Alignment keeps us on track."</p>
-            <div class="action-footer">
-              <span class="status-marker resolved">Open Review Loop</span>
-            </div>
+            <p class="correction-note">"Ensure we compare individual tracking data matrices before executing updates on architectural designs."</p>
+            <div class="action-footer"><span class="status-marker resolved">Open Review Loop</span></div>
           </div>
         </div>
 
-        <!-- Secure Vault Assets Row -->
+        <!-- NEW EXPANDED VAULT GALLERY SECTION (10 ITEMS) -->
         <div class="vault-gallery-block">
           <h4 class="block-title">Confidential Gallery Logs</h4>
           <div class="editorial-grid">
+            <!-- Asset 1 -->
             <div class="entry-card secure-asset">
-              <div class="img-container secret">
-                <span style="font-size: 2.5rem;">📂</span>
-              </div>
-              <div class="card-meta">Private View Secure Server Storage</div>
-              <h3 class="card-heading">Blueprint Iterations & Unfiltered Notes</h3>
+              <div class="img-container secret" style="background-image: url('secure1.jpg');"></div>
+              <div class="card-meta">Secure Asset 01</div>
+              <h3 class="card-heading">Unfiltered Blueprints</h3>
+              <p class="card-body-text">Confidential design sketches and structural drafts.</p>
+            </div>
+            <!-- Asset 2 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure2.jpg');"></div>
+              <div class="card-meta">Secure Asset 02</div>
+              <h3 class="card-heading">Private Dialogue Logs</h3>
+              <p class="card-body-text">Strategic milestone schedules and core agreements.</p>
+            </div>
+            <!-- Asset 3 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure3.jpg');"></div>
+              <div class="card-meta">Secure Asset 03</div>
+              <h3 class="card-heading">Midnight Musings</h3>
+              <p class="card-body-text">Unfiltered reflections captured during late-night build iterations.</p>
+            </div>
+            <!-- Asset 4 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure4.jpg');"></div>
+              <div class="card-meta">Secure Asset 04</div>
+              <h3 class="card-heading">Material Cost Sheets</h3>
+              <p class="card-body-text">Raw estimates for logistics and building expansions.</p>
+            </div>
+            <!-- Asset 5 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure5.jpg');"></div>
+              <div class="card-meta">Secure Asset 05</div>
+              <h3 class="card-heading">Alignment Strategies</h3>
+              <p class="card-body-text">Internal targets regarding upcoming professional decisions.</p>
+            </div>
+            <!-- Asset 6 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure6.jpg');"></div>
+              <div class="card-meta">Secure Asset 06</div>
+              <h3 class="card-heading">Candid Reminders</h3>
+              <p class="card-body-text">Quick, raw captures of simple shared household breaks.</p>
+            </div>
+            <!-- Asset 7 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure7.jpg');"></div>
+              <div class="card-meta">Secure Asset 07</div>
+              <h3 class="card-heading">The Unspoken Plan</h3>
+              <p class="card-body-text">Vision maps outlining upcoming personal structural layouts.</p>
+            </div>
+            <!-- Asset 8 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure8.jpg');"></div>
+              <div class="card-meta">Secure Asset 08</div>
+              <h3 class="card-heading">Shared Ledger Drafts</h3>
+              <p class="card-body-text">Encrypted tracking tables showing weekly development metrics.</p>
+            </div>
+            <!-- Asset 9 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure9.jpg');"></div>
+              <div class="card-meta">Secure Asset 09</div>
+              <h3 class="card-heading">Growth Loop Review</h3>
+              <p class="card-body-text">Direct critiques compiled for our monthly path review.</p>
+            </div>
+            <!-- Asset 10 -->
+            <div class="entry-card secure-asset">
+              <div class="img-container secret" style="background-image: url('secure10.jpg');"></div>
+              <div class="card-meta">Secure Asset 10</div>
+              <h3 class="card-heading">Final Legacy Map</h3>
+              <p class="card-body-text">The permanent long-term anchor coordinate data matrix.</p>
             </div>
           </div>
         </div>
@@ -777,8 +984,13 @@
     </section>
   </main>
 
-  <!-- UNIFIED AND FIXED JAVASCRIPT SYSTEM ENGINE -->
   <script>
+    /* --- 0. HARDCODED SYSTEM INTERFACE SETTINGS --- */
+    const CONTACT_CONFIG = {
+      emailAddress: "yourname@example.com", // <-- Change to your actual email later
+      phoneNumber: "254700000000"          // <-- Change to your phone number later (use country code, no +)
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
       initThemeEngine();
       initNavigationRouter();
@@ -845,14 +1057,13 @@
     }
 
     /**
-     * 3. Anniversary Live Timer
+     * 3. Anniversary Live Timer[cite: 1]
      */
     function initLiveCountdown() {
       const displayElement = document.getElementById('countdownTimer');
       if (!displayElement) return;
 
-      // Milestone Target: November 4, 2024 (Month index is 0-based, so 10 = November)
-      const targetDate = new Date(2024, 10, 4).getTime();
+      const targetDate = new Date(2024, 10, 4).getTime(); // Nov 4, 2024
 
       function updateTimer() {
         const now = new Date().getTime();
@@ -913,8 +1124,32 @@
     }
 
     /**
-     * 5. Vault Access Verification
-     * Key is configured to: 2024
+     * 5. Dynamic App Contact Switcher Router
+     */
+    function handleContactRouting(event) {
+      event.preventDefault();
+      
+      const channel = document.querySelector('input[name="contactChannel"]:checked').value;
+      const rawText = document.getElementById('contactMessageInput').value;
+      const encodedText = encodeURIComponent(rawText);
+
+      let targetUrl = '';
+
+      if (channel === 'email') {
+        targetUrl = `mailto:${CONTACT_CONFIG.emailAddress}?subject=Digital%20Diary%20Contact&body=${encodedText}`;
+      } else if (channel === 'whatsapp') {
+        targetUrl = `https://wa.me/${CONTACT_CONFIG.phoneNumber}?text=${encodedText}`;
+      } else if (channel === 'call') {
+        targetUrl = `tel:${CONTACT_CONFIG.phoneNumber}`;
+      }
+
+      if (targetUrl) {
+        window.open(targetUrl, '_blank');
+      }
+    }
+
+    /**
+     * 6. Vault Access Verification[cite: 1]
      */
     function unlockVault(event) {
       event.preventDefault();
@@ -926,14 +1161,14 @@
 
       if (!inputField) return;
 
-      if (inputField.value.trim() === "2024") {
+      if (inputField.value.trim() === "2024") { //[cite: 1]
         lockScreen.style.display = 'none';
         secureContent.style.display = 'block';
         errorField.style.display = 'none';
       } else {
         errorField.style.display = 'block';
         inputField.style.animation = 'none';
-        void inputField.offsetWidth; // Force element layout reflow
+        void inputField.offsetWidth; 
         inputField.style.animation = 'shakeError 0.4s ease';
       }
     }
